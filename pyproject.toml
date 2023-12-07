@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PredictRating"
+version = "0.1.0"
+description = "A Python module for predicting ratings based on reviews."
+authors = [{name = "David Vävinggren"}]
+requires-python = ">=3.8"
+readme = "README.md"
+dependencies = [
+    "pandas",
+ ]
+
+[tool.poetry.dev-dependencies]
+# Add any development dependencies here if needed
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.urls]
+Homepage = "https://github.com/davidvavinggren/book-rating-prediction"
