@@ -1,7 +1,7 @@
 from PredictRating.classes.data import Data
 
 def test_downsample():
-    data = Data('reviews.json')
+    data = Data('reviews_light.json')
     assert len(data.df) == len(data.df.drop_duplicates()), 'There are duplicates in the data'
     data.plot_bar()
     print(data.df.head(50))
