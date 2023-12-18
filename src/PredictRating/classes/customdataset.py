@@ -1,6 +1,4 @@
-from torch import tensor, long
-from PredictRating.classes.data import Data
-from transformers import DistilBertTokenizer
+import torch
 from torch.utils.data import Dataset
 
 class CustomDataset(Dataset):
@@ -15,21 +13,18 @@ class CustomDataset(Dataset):
     def __getitem__(self, idx):
         review = self.df.review[idx]
         inputs = self.tokenizer.encode_plus(text = review,
-                                            add_special_tokens = True,
+                                            add_special_tokens = True, # Like [CLS] and [SEP]
                                             max_length = self.max_len, 
-                                            padding = 'max_length', 
-                                            truncation = True)
+                                            padding = 'max_length', # Pad to max_length
+                                            truncation = True) # Truncate to max_length
 
+        # mask contains the attention mask; indicates what tokens are padding (== 0) and what are not (== 1)
         return {
-            'ids': tensor(inputs['input_ids'], dtype = long),
-            'mask': tensor(inputs['attention_mask'], dtype = long),
-            'targets': tensor(self.df.rating[idx], dtype = long)
+            'text': review,
+            'ids': torch.tensor(inputs['input_ids'], dtype = torch.long),
+            'mask': torch.tensor(inputs['attention_mask'], dtype = torch.long),
+            'targets': torch.tensor(self.df.rating[idx], dtype = torch.long)
         } 
     
     def __len__(self):
         return len(self.df)
-
-d = Data('reviews_light.json')
-d.downsample()
-t = CustomDataset(d.df, DistilBertTokenizer.from_pretrained('distilbert-base-cased'), 512)
-print(t[3])
