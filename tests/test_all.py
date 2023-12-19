@@ -1,25 +1,21 @@
 from PredictRating.classes.data import Data
-from PredictRating.classes.data import Data
 from transformers import DistilBertTokenizer
 from PredictRating.classes.customdataset import CustomDataset
 
 def test_downsample():
-    data = Data('reviews.json')
+    split = 0.8
+    data = Data('reviews.json', split = split)
     assert len(data.df) == len(data.df.drop_duplicates()), 'There are duplicates in the data'
-    data.plot_bar()
-    print(data.df.head(50))
-    
-    min_freq = data.counts.values[-1]
-    data.downsample()
-    assert len(data.df) == len(data.df.drop_duplicates()), 'There are duplicates in the data'
-    assert len(data.df) == min_freq * 5, 'Classes are not balanced'
-    data.plot_bar()
+    data.plot_bar(data.df)
+    data.plot_bar(data.train)
+    data.plot_bar(data.test)
 
 def test_subset():
+    p = 0.2
     data = Data('reviews.json')
-    data.downsample()
-    data.subset(1000)
-    assert len(data.df) == 5000
+    n = len(data.df)
+    data.df = data.subset(data.df, p)
+    assert -10 < len(data.df) - n * p < 10
 
 def test_tokenizer():
     max_len = 359
