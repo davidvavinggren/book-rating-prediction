@@ -20,7 +20,6 @@ class CustomDataset(Dataset):
 
         # mask contains the attention mask; indicates what tokens are padding (== 0) and what are not (== 1)
         return {
-            'text': review,
             'ids': torch.tensor(inputs['input_ids'], dtype = torch.long),
             'mask': torch.tensor(inputs['attention_mask'], dtype = torch.long),
             'targets': torch.tensor(self.df.rating[idx], dtype = torch.long)
