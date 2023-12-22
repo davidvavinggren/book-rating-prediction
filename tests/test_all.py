@@ -1,6 +1,7 @@
 from PredictRating.classes.data import Data
-from transformers import DistilBertTokenizer
 from PredictRating.classes.customdataset import CustomDataset
+
+from transformers import DistilBertTokenizer
 
 def test_downsample():
     split = 0.8
