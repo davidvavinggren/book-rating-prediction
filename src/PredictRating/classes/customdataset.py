@@ -19,11 +19,10 @@ class CustomDataset(Dataset):
                                             truncation = True) # Truncate to max_length
 
         # mask contains the attention mask; indicates what tokens are padding (== 0) and what are not (== 1)
-        return {
-            'ids': torch.tensor(inputs['input_ids'], dtype = torch.long),
-            'mask': torch.tensor(inputs['attention_mask'], dtype = torch.long),
-            'targets': torch.tensor(self.df.rating[idx], dtype = torch.long)
-        } 
+        return (torch.tensor(inputs['input_ids'], dtype = torch.long),
+            torch.tensor(inputs['attention_mask'], dtype = torch.long),
+            torch.tensor(self.df.rating[idx] - 1, dtype = torch.long)
+        ) 
     
     def __len__(self):
         return len(self.df)

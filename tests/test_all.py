@@ -1,5 +1,7 @@
 from PredictRating.classes.data import Data
 from PredictRating.classes.customdataset import CustomDataset
+from PredictRating.classes.basenet import BaseNet
+from PredictRating.classes.bertnet import BertNet
 
 from transformers import DistilBertTokenizer
 
@@ -23,4 +25,14 @@ def test_tokenizer():
     d = Data('reviews_light.json')
     t = CustomDataset(d.df, DistilBertTokenizer.from_pretrained('distilbert-base-cased'), max_len)
     assert type(t[3]) == dict
-    assert len(t[5]['ids']) == max_len
+    assert len(t[5][0]) == max_len
+
+def test_device():
+    base = BaseNet()
+    assert base.device == 'mps' # use if on mac
+    #assert base.device == 'gpu' # use if on PC
+
+def test_model_load():
+    bert = BertNet()
+    bert._load_model()
+    assert bert._model_loaded is True
