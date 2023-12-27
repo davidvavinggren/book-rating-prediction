@@ -92,11 +92,6 @@ class BaseNet(torch.nn.Module):
         
         self._save_model()
 
-        if display_result is True:
-            # Keep plot open after training; turn off interactive mode
-            plt.ioff()
-            plt.show()
-
     def _train(self, data):
         self.train()
         train_loss = 0
