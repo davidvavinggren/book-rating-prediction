@@ -43,6 +43,9 @@ class BaseNet(torch.nn.Module):
                     break
                 else:
                     confirm = input('Invalid entry. Enter [y/n]: ')
+        else:
+            torch.save(self.state_dict(), self.model_path)
+            print('Model saved!')
 
     def _model_exists(self):
         if os.path.exists(self.model_path):
@@ -90,12 +93,18 @@ class BaseNet(torch.nn.Module):
             if display_result is True:
                 self._update_plot(ax, train_losses, test_losses, epoch)
         
+
+        if display_result is True:
+            # Keep plot; turn off interactive mode
+            plt.ioff()
+            plt.show()
+        
         self._save_model()
 
     def _train(self, data):
         self.train()
         train_loss = 0
-        for batch, (ids, masks, targets) in enumerate(data):
+        for batch, (ids, masks, targets) in tqdm(enumerate(data)):
             # Send data to device
             ids, masks, targets = (tensor.to(self.device, dtype = torch.long) for tensor in [ids, masks, targets])
 

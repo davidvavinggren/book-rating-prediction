@@ -26,6 +26,8 @@ def main():
 
     train_data, test_data = load_data(tokenizer = tokenizer, name = 'reviews.json',
                                       p = DATA_PERCENTAGE, split = TRAIN_SPLIT)
+    print(f'# Batches = {len(train_data.dataset)}, using batch size = {TRAIN_BATCH_SIZE}\n')
+
     bert.train_model(train_data = train_data, test_data = test_data, epochs = EPOCHS, display_result = True)
 
 if __name__ == '__main__':
