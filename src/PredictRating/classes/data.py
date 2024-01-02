@@ -37,7 +37,7 @@ class Data:
         df = df.rename(columns = {'review_text': 'review'}) # Rename column review_text to review
         df = df[df.rating != 0] # Remove all reviews with no rating attached to it
         df = df.drop_duplicates()
-        df = df.sample(frac = 1).reset_index(drop = True) # Shuffle df
+        df = df.sample(frac = 1, random_state = 100).reset_index(drop = True) # Shuffle df
         return df
 
     def plot_bar(self, df: pd.DataFrame) -> None:
@@ -60,10 +60,10 @@ class Data:
         samples = []
         for rating in counts.index:
             df_with_rating = df[df.rating == rating] # Find all reviews with rating == rating
-            sample = df_with_rating.sample(min_freq, replace = False) # Sample min_freq of them
+            sample = df_with_rating.sample(min_freq, replace = False, random_state = 100) # Sample min_freq of them
             samples.append(sample)
         df = pd.concat(samples).reset_index(drop = True) # Concat into one df 
-        df = df.sample(frac = 1).reset_index(drop = True) # Shuffle df 
+        df = df.sample(frac = 1, random_state = 100).reset_index(drop = True) # Shuffle df 
         return df
 
     def subset(self, df: pd.DataFrame, p: float) -> pd.DataFrame:
@@ -74,10 +74,10 @@ class Data:
         for rating in range(1,6):
             rating_set = df[df.rating == rating]
             n = len(rating_set)
-            samples.append(rating_set.sample(int(p * n), replace = False)) 
+            samples.append(rating_set.sample(int(p * n), replace = False, random_state = 100)) 
         df = pd.concat(samples).reset_index(drop = True)
         # Shuffle the df
-        df = df.sample(frac = 1).reset_index(drop = True)
+        df = df.sample(frac = 1, random_state = 100).reset_index(drop = True)
         return df 
     
     def create_train_test(self, split: float) -> tuple:
@@ -85,7 +85,7 @@ class Data:
         Create training set and test set. Undersample the training set before returning.
         split is the training set percentage, so set split = 0.8 if you want 80/20 train/test split.
         '''
-        train = self.df.sample(frac = split).reset_index(drop = True)
+        train = self.df.sample(frac = split, random_state = 100).reset_index(drop = True)
         test = self.df.drop(train.index).reset_index(drop = True)
 
         train = self.undersample(train)
