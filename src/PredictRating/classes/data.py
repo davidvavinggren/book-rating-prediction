@@ -49,6 +49,7 @@ class Data:
         plt.title('Rating frequencies')
         plt.xlabel('Rating')
         plt.ylabel('Frequency')
+        plt.tight_layout()
         plt.show()
 
     def undersample(self, df: pd.DataFrame) -> pd.DataFrame:

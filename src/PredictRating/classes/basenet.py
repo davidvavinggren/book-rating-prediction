@@ -161,24 +161,38 @@ class BaseNet(torch.nn.Module):
         
         return eval_loss
             
-    def test_model(self, test_data: 'torch.utils.data.DataLoader') -> tuple:
+    def test_model(self, test_data: 'torch.utils.data.DataLoader', tokenizer) -> tuple:
         '''
         Make inference on the test data. Return correct list and prediction list.
         '''
         self.eval()
-        correct = []
-        preds = []
+        correct_list = []
+        preds_list = []
         with torch.no_grad():
             for (ids, masks, targets) in test_data:
                 # Send data to device
                 ids, masks, targets = (tensor.to(self.device, dtype = torch.long) for tensor in [ids, masks, targets])
-                correct += (targets + 1).tolist() # Add 1 to get ratings instead of classes
+                correct = targets + 1 # Add 1 to get ratings instead of classes
+                correct_list += correct.tolist() 
 
                 # Forward pass
                 logits = self(ids, masks)
-                preds += (F.softmax(logits, dim = 1).argmax(1) + 1).tolist() # Add 1 to get ratings instead of classes
+                preds = F.softmax(logits, dim = 1).argmax(1) + 1 # Add 1 to get ratings instead of classes
+                preds_list += preds.tolist() 
+                
+                # Print out any sentence with deviation = 4
+                devs = torch.abs(preds - correct)
+                if torch.max(devs) == 4:
+                    argmax = torch.argmax(devs)
+                    sentence_ids = ids[argmax, :]
+                    last_nonzero_idx = torch.max(torch.nonzero(sentence_ids, as_tuple = False)).item() + 1
+                    trimmed_tensor = sentence_ids[:last_nonzero_idx]
+                    print()
+                    print(tokenizer.decode(trimmed_tensor))
+                    print(f'correct: {correct[argmax]}')
+                    print(f'pred: {preds[argmax]}')
         
-        return correct, preds
+        return correct_list, preds_list
 
 
     def eval_review(self, reviews: str, tokenizer) -> int:
@@ -196,7 +210,8 @@ class BaseNet(torch.nn.Module):
             ids = torch.tensor(encoding['input_ids'], dtype = torch.long).to(self.device)
             mask = torch.tensor(encoding['attention_mask'], dtype = torch.long).to(self.device)
             
-            logits = self(ids, mask)
+            with torch.no_grad():
+                logits = self(ids, mask)
             pred = F.softmax(logits, dim = 1).argmax(1).item()
             ratings.append(pred + 1)
         return ratings
