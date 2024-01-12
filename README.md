@@ -6,3 +6,5 @@ To run the code, first clone the project onto your own PC. Then relocate to the 
 All scripts run from root. Download the goodreads datasets from `https://mengtingwan.github.io/data/goodreads` (the one called `goodreads_reviews_spoiler_raw.json.gz`), place it in `book-rating-prediction/data` and name it `reviews.json`. For the Amazon set, download it from `https://www.kaggle.com/datasets/arhamrumi/amazon-product-reviews`, place it in `book-rating-prediction/data` and name it `reviews_amzn.csv`.
 
 A model is trained with `train.py` and evaluated with `bertstats.py`. `baseline.py` and `humanlevel.py` creates baselines for the BERT classifier. `constants.py` contains all hyperparameter values used during training. There are some tests written for the package in `book-rating-prediction/tests`.
+
+The BERT model from the report can be downloaded from `https://liuonline-my.sharepoint.com/:u:/g/personal/davva827_student_liu_se/Ef_ERNE2j0hFpnQSKLOu4NwBlgVpGZQeAofyQrL2Q0XRsw?e=B8k6HM`. Download it and place it in `book-rating-prediction/models` if you want to use it.
