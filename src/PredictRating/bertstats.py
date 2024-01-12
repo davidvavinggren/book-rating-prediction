@@ -41,7 +41,8 @@ def plot_accs(cmat):
     plt.grid(True, color='k', linestyle='-', linewidth=0.1)
 
     plt.tight_layout()
-    plt.savefig('plot1', dpi = 1000)
+    plt.show()
+    #plt.savefig('plot1', dpi = 1000)
 
 
 def plot_devs(correct, preds):
@@ -63,6 +64,9 @@ def plot_devs(correct, preds):
     
 
 def main(model_name, model, tokenizer):
+    '''
+    Evaluate the BERT classifier. Both on goodreads dataset, handwritten reviews and the Amazon product review dataset.
+    '''
     _, test_data = load_data(tokenizer = tokenizer, name = 'reviews.json',
                                       p = DATA_PERCENTAGE, split = TRAIN_SPLIT)
     
@@ -86,7 +90,8 @@ def main(model_name, model, tokenizer):
     plot_devs(correct, preds)
     disp = ConfusionMatrixDisplay(cmat, display_labels = ['1', '2', '3', '4', '5'])
     disp.plot()
-    plt.savefig('plot3', dpi = 1000)
+    plt.show()
+    #plt.savefig('plot3', dpi = 1000)
     print(report(correct, preds))
 
     # Test a few of my own reviews
@@ -120,7 +125,8 @@ def main(model_name, model, tokenizer):
     plot_devs(correct, preds)
     disp = ConfusionMatrixDisplay(cmat, display_labels = ['1', '2', '3', '4', '5'])
     disp.plot()
-    plt.savefig('plot311', dpi = 1000)
+    plt.show()
+    #plt.savefig('plot4', dpi = 1000)
     print(report(correct, preds))
 
 if __name__ == '__main__':

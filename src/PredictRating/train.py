@@ -23,6 +23,9 @@ def load_data(tokenizer, name, p, split):
             DataLoader(test_data, batch_size = TEST_BATCH_SIZE, shuffle = True))
 
 def main(model_name, model, tokenizer):
+    '''
+    Train a model.
+    '''
     bert = BertNet(model, model_name = model_name)
     bert.to(bert.device)
 

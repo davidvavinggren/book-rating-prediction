@@ -12,6 +12,9 @@ import matplotlib.pyplot as plt
 
 
 def main(model):
+    '''
+    Train and evaluate baseline models.
+    '''
     data = Data('reviews.json', p = DATA_PERCENTAGE, split = TRAIN_SPLIT)
 
     clf = make_pipeline(CountVectorizer(), model)
