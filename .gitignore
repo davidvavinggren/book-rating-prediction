@@ -162,4 +162,5 @@ cython_debug/
 **/__pycache__/
 **/.vscode/
 data/**
+models/**
 *.csv

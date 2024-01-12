@@ -1,5 +1,0 @@
-https://pytorch.org/docs/stable/data.html
-https://arxiv.org/abs/1910.01108
-https://www.kaggle.com/code/eggwhites2705/transformers-multiclass-classification-ipynb
-https://huggingface.co/docs/transformers/model_doc/distilbert#distilberttokenizer
-https://huggingface.co/docs/transformers/v4.35.2/en/internal/tokenization_utils#transformers.PreTrainedTokenizerBase.encode_plus
