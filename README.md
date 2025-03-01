@@ -7,6 +7,6 @@ All scripts run from root. Download the goodreads datasets from [here](https://m
 
 A model is trained with `train.py` and evaluated with `bertstats.py`. `baseline.py` and `humanlevel.py` creates baselines for the BERT classifier. `constants.py` contains all hyperparameter values used during training. There are some tests written for the package in `book-rating-prediction/tests`.
 
-The BERT model from the report can be downloaded from [here](bit.ly/41EqddH). Download it and place it in `book-rating-prediction/models` if you want to use it.
+The BERT model from the report can be downloaded from [here](https://bit.ly/41EqddH). Download it and place it in `book-rating-prediction/models` if you want to use it.
 
 Final report awarded with highest grade (5) available @ [here](https://bit.ly/3QCNGph).
