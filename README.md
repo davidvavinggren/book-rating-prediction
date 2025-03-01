@@ -9,4 +9,4 @@ A model is trained with `train.py` and evaluated with `bertstats.py`. `baseline.
 
 The BERT model from the report can be downloaded from [here](bit.ly/41EqddH). Download it and place it in `book-rating-prediction/models` if you want to use it.
 
-Final report awarded with highest grade (5) available @ [here](bit.ly/3QCNGph).
+Final report awarded with highest grade (5) available @ [here](https://bit.ly/3QCNGph).
